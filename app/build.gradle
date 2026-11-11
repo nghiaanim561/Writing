@@ -1,0 +1,31 @@
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'vn.boox.luyenviet'
+    compileSdk 35
+    defaultConfig {
+        applicationId 'vn.boox.luyenviet'
+        minSdk 26
+        targetSdk 35
+        versionCode 2
+        versionName '1.1'
+    }
+    signingConfigs {
+        release {
+            storeFile file('release.keystore')
+            storePassword 'luyenviet123'
+            keyAlias 'luyenviet'
+            keyPassword 'luyenviet123'
+        }
+    }
+    buildTypes {
+        release { minifyEnabled false; signingConfig signingConfigs.release }
+        debug { signingConfig signingConfigs.release }
+    }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'androidx.webkit:webkit:1.12.1'
+}
