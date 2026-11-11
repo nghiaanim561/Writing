@@ -11,17 +11,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
-        with: { distribution: temurin, java-version: '17' }
-      - uses: android-actions/setup-android@v3
-      - run: chmod +x gradlew && ./gradlew assembleRelease --no-daemon
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.14.3'
+      - name: Build APK
+        run: gradle assembleRelease --no-daemon --stacktrace
       - run: cp app/build/outputs/apk/release/app-release.apk LuyenViet.apk
       - uses: actions/upload-artifact@v4
-        with: { name: LuyenViet-apk, path: LuyenViet.apk }
-      - name: Publish as release "latest"
-        uses: softprops/action-gh-release@v2
+        with:
+          name: LuyenViet-apk
+          path: LuyenViet.apk
+      - uses: softprops/action-gh-release@v2
         with:
           tag_name: latest
-          name: Luyện viết – bản mới nhất
-          body: "Tải file LuyenViet.apk bên dưới và cài lên máy Boox."
+          name: Luyen viet - ban moi nhat
+          body: Tai file LuyenViet.apk ben duoi va cai len may Boox.
           files: LuyenViet.apk
-          prerelease: false
